@@ -14,7 +14,7 @@ public class MyArrayListTests {
     @Test
     public void emptyListsEquality() {
         MyArrayList list1 = new MyArrayList(10);
-        Assertions.assertEquals(list, list1);
+        Assertions.assertTrue(list.myEquals(list1));
     }
 
     @Test
@@ -39,7 +39,7 @@ public class MyArrayListTests {
         }
         list.add(new MyArrayList());
         list.remove(list.size() - 1);
-        Assertions.assertEquals(list, list1);
+        Assertions.assertTrue(list.myEquals(list1));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class MyArrayListTests {
             list.add(i);
         }
         list.remove(5);
-        Assertions.assertNotEquals(list, list1);
+        Assertions.assertFalse(list.myEquals(list1));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class MyArrayListTests {
             list.add(s.toString());
         }
         list.remove(6);
-        Assertions.assertEquals(list, list1);
+        Assertions.assertTrue(list.myEquals(list1));
     }
 
     @Test
@@ -145,7 +145,7 @@ public class MyArrayListTests {
         }
         list.add(5);
         list.remove(2);
-        Assertions.assertEquals(list, list1);
+        Assertions.assertTrue(list.myEquals(list1));
     }
 
     @Test

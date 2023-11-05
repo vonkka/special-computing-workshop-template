@@ -13,8 +13,8 @@ public class MyStackTests {
 
     @Test
     public void emptyListsEquality() {
-        MyStack list1 = new MyStack(10);
-        Assertions.assertEquals(stack, list1);
+        MyStack stack1 = new MyStack(10);
+        Assertions.assertTrue(stack.myEquals(stack1));
     }
 
     @Test
@@ -26,7 +26,7 @@ public class MyStackTests {
         }
         stack.push(new MyArrayList());
         stack.pop();
-        Assertions.assertEquals(stack, stack1);
+        Assertions.assertTrue(stack.myEquals(stack1));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class MyStackTests {
             stack.push(i);
         }
         stack.pop();
-        Assertions.assertNotEquals(stack, stack1);
+        Assertions.assertFalse(stack.myEquals(stack1));
     }
 
     @Test
@@ -66,6 +66,6 @@ public class MyStackTests {
             stack.push("a".repeat(i));
         }
         stack.pop();
-        Assertions.assertEquals(stack, stack1);
+        Assertions.assertTrue(stack.myEquals(stack1));
     }
 }
