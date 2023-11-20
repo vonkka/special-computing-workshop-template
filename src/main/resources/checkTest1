@@ -1,0 +1,8 @@
+src\main\resources\testDir
+src\main\resources\testDir\dir1
+src\main\resources\testDir\dir1\dirInDir1
+src\main\resources\testDir\dir1\dirInDir1\fff
+src\main\resources\testDir\dir1\smth
+src\main\resources\testDir\dir1\smth2
+src\main\resources\testDir\dir2
+src\main\resources\testDir\smth
