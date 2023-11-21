@@ -54,8 +54,6 @@ public class MultiThreadingTests {
     @Test
     public void speedTest1000() throws IOException, InterruptedException {
         String inFile = "src\\main\\resources\\multiThreadingTests\\1000numbersIn";
-        String outFile = "src\\main\\resources\\multiThreadingTests\\1000numbersOut";
-        Path checkFile = Path.of("src\\main\\resources\\multiThreadingTests\\1000numbersCheck");
         double[] input = multiThreading.getNums(inFile);
         long start = System.nanoTime();
         for (int i = 0; i < 10; i++) {
@@ -74,8 +72,6 @@ public class MultiThreadingTests {
     @Test
     public void speedTest10000() throws IOException, InterruptedException {
         String inFile = "src\\main\\resources\\multiThreadingTests\\10000numbersIn";
-        String outFile = "src\\main\\resources\\multiThreadingTests\\10000numbersOut";
-        Path checkFile = Path.of("src\\main\\resources\\multiThreadingTests\\10000numbersCheck");
         double[] input = multiThreading.getNums(inFile);
         long start = System.nanoTime();
         for (int i = 0; i < 10; i++) {
@@ -94,8 +90,6 @@ public class MultiThreadingTests {
     @Test
     public void speedTest1000000() throws IOException, InterruptedException {
         String inFile = "src\\main\\resources\\multiThreadingTests\\1000000numbersIn";
-        String outFile = "src\\main\\resources\\multiThreadingTests\\1000000numbersOut";
-        Path checkFile = Path.of("src\\main\\resources\\multiThreadingTests\\1000000numbersCheck");
         double[] input = multiThreading.getNums(inFile);
         long start = System.nanoTime();
         for (int i = 0; i < 10; i++) {
