@@ -2,13 +2,10 @@ package ru.spbu.apcyb.svp.tasks;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
@@ -55,9 +52,7 @@ public class CountWordsInText {
             , executor);
             futures.add(future);
         }
-        for (var future: futures) {
-            future.join();
-        }
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
         futures.clear();
         executor.shutdown();
     }

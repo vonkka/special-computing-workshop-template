@@ -16,8 +16,8 @@ public class CountWordsTests {
     @Test
     public void smallCounterTest() throws IOException {
         // Input string: "a b b b c a s f r e t fgs gwe qw r qrq e wq rqw re a f gr r g d"
-        String inFile = "D:\\JavaProjectTests\\StreamAPI\\small test.txt";
-        String outDir = "D:\\JavaProjectTests\\StreamAPI\\test1";
+        String inFile = "src\\main\\resources\\StreamAPITests\\small test.txt";
+        String outDir = "src\\main\\resources\\StreamAPITests\\test1";
         Map<String, Long> res = countWordsInText.countWords(inFile, outDir);
         Assertions.assertEquals(3L, res.getOrDefault("a", -1L));
         Assertions.assertEquals(3L, res.getOrDefault("r", -1L));
