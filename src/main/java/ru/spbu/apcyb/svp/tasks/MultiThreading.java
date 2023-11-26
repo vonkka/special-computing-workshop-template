@@ -5,54 +5,61 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MultiThreading {
     private int maxThreads = 8;
-    private final int startSize = 100;
 
     public void setMaxThreads(int maxThreads) {
         this.maxThreads = maxThreads;
     }
 
-    public double[] getNums(String file) throws IOException, NumberFormatException {
+    public List<Double> getNums(String file) throws IOException, NumberFormatException {
         if (Files.isDirectory(Path.of(file))) {
             throw new IOException("Provided file is a directory");
         }
         Scanner scanner = new Scanner(new File(file));
-        double[] numbers = new double[startSize];
-        int k = 0;
+        List<Double> numbers = new ArrayList<>();
         while (scanner.hasNextLine()) {
             StringTokenizer stringTokenizer = new StringTokenizer(scanner.nextLine(), " ");
             while (stringTokenizer.hasMoreTokens()) {
-                numbers[k++] = Double.parseDouble(stringTokenizer.nextToken());
-                if (k == numbers.length) {
-                    numbers = Arrays.copyOf(numbers, k * 10);
-                }
+                double num = Double.parseDouble(stringTokenizer.nextToken());
+                numbers.add(num);
             }
         }
-        numbers = Arrays.copyOf(numbers, k);
         return numbers;
     }
 
-    public double[] calculateTan(double[] nums) throws InterruptedException {
-        double[] res = new double[nums.length];
-        Queue<Thread> threads = new LinkedList<>();
-        int blockSize = (int) Math.ceil((double) nums.length / maxThreads);
+    public List<Double> calculateTan(List<Double> nums) {
+        Double[] res = new Double[nums.size()];
+        ExecutorService executor = Executors.newFixedThreadPool(maxThreads);
+        List<CompletableFuture> futures = new ArrayList<>();
+        int blockSize = (int) Math.ceil((double) nums.size() / maxThreads);
         for (int i = 0; i < maxThreads; i++) {
-            Thread thread = new Thread(new MyThread(res, nums, i * blockSize, (i + 1) * blockSize));
-            thread.start();
-            threads.add(thread);
+            int k = i;
+            CompletableFuture<Void> future = CompletableFuture.runAsync(
+                    () -> calculateTan(res, nums, k * blockSize, (k + 1) * blockSize)
+                    , executor);
+            futures.add(future);
         }
-        for (Thread thread: threads) {
-            thread.join();
-        }
-        threads.clear();
-        return res;
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+        futures.clear();
+        executor.shutdown();
+        return Arrays.asList(res);
     }
 
-    public void writeTan(Path fileOut, double[] res) throws IOException {
-        Files.writeString(fileOut, Arrays.toString(res).replace("[", "").
-                replace("]", "").replace(",", ""));
+    public void writeTan(Path fileOut, List<Double> res) throws IOException {
+        Files.writeString(fileOut, res.toString().replace("[", "").
+                replace(",", "").replace("]", ""));
+    }
+
+    public void calculateTan(Double[] res, List<Double> nums, int start, int end) {
+        end = Math.min(end, nums.size());
+        for (int i = start; i < end; ++i) {
+            res[i] = Math.tan(nums.get(i));
+        }
     }
 
     private void generateNumbers(Path saveIn, int num, double min, double len) throws IOException {
