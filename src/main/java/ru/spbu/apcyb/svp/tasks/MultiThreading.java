@@ -44,7 +44,7 @@ public class MultiThreading {
                     , executor);
             futures.add(future);
         }
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
         futures.clear();
         executor.shutdown();
         return Arrays.asList(res);
